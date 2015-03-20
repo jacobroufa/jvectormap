@@ -1,0 +1,19 @@
+{
+  "name": "jvectormap",
+  "version": "2.0.2",
+  "homepage": "https://github.com/jacobroufa/jvectormap",
+  "authors": [
+    "Jacob M. Roufa <jroufa@quietlightcom.com>"
+  ],
+  "description": "jVectorMap fork for Quiet Light Communications",
+  "main": "build/jquery.jvectormap.min.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

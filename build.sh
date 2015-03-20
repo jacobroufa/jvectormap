@@ -46,7 +46,8 @@ done
 
 if [ -z "$1" ]
   then
-    minified=jquery.jvectormap.min.js
+    mkdir build
+    minified=build/jquery.jvectormap.min.js
   else
     minified=$1
 fi

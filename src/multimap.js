@@ -86,9 +86,16 @@ jvm.MultiMap.prototype = {
   },
 
   drillDown: function(name, code){
-    var currentMap = this.history[this.history.length - 1],
-        that = this,
-        focusPromise = currentMap.setFocus({region: code, animate: true}),
+    var currentMap = this.history[this.history.length - 1];
+    var focusOpts = {region: code, animate: true};
+
+        if ( name === currentMap.params.map ) {
+          currentMap.setFocus( focusOpts );
+          return false;
+        }
+
+    var that = this,
+        focusPromise = currentMap.setFocus( focusOpts ),
         downloadPromise = this.downloadMap(code);
 
     focusPromise.then(function(){
@@ -103,7 +110,9 @@ jvm.MultiMap.prototype = {
     this.drillDownPromise.then(function(){
       currentMap.params.container.hide();
       if (!that.maps[name]) {
-        that.addMap(name, {map: name, multiMapLevel: currentMap.params.multiMapLevel + 1});
+        that.addMap(name, jvm.$.extend(
+          {map: name, multiMapLevel: currentMap.params.multiMapLevel + 1},
+          {backgroundColor: currentMap.params.backgroundColor, regionStyle: currentMap.params.regionStyle}));
       } else {
         that.maps[name].params.container.show();
       }
