@@ -27,6 +27,7 @@ jvm.MultiMap = function(params) {
   this.params = jvm.$.extend(true, {}, jvm.MultiMap.defaultParams, params);
   this.params.maxLevel = this.params.maxLevel || Number.MAX_VALUE;
   this.params.main = this.params.main || {};
+  this.params.settings = this.params.settings || {};
   this.params.main.multiMapLevel = 0;
   this.history = [ this.addMap(this.params.main.map, this.params.main) ];
   this.defaultProjection = this.history[0].mapData.projection.type;
@@ -108,11 +109,12 @@ jvm.MultiMap.prototype = {
     });
     this.drillDownPromise = jvm.$.when(downloadPromise, focusPromise);
     this.drillDownPromise.then(function(){
+      var nestedSettings = that.params.settings || {backgroundColor: currentMap.params.backgroundColor, regionStyle: currentMap.params.regionStyle};
       currentMap.params.container.hide();
       if (!that.maps[name]) {
         that.addMap(name, jvm.$.extend(
           {map: name, multiMapLevel: currentMap.params.multiMapLevel + 1},
-          {backgroundColor: currentMap.params.backgroundColor, regionStyle: currentMap.params.regionStyle}));
+          nestedSettings));
       } else {
         that.maps[name].params.container.show();
       }
